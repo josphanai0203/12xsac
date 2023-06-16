@@ -54,7 +54,12 @@ public class Company {
     public void handleStatistical() {
         String numStr = Input.enterString("Phone Number Start With ", Validator.REGEX_NUMBER);
         ArrayList<Customer> phoneArr = search(c -> c.getPhone().startsWith(numStr));
+        if(phoneArr.isEmpty()){
+            System.out.println("No Customer found");
+        }else{
+            
         phoneArr.forEach(c -> System.out.println(c));
+        }
     }
     
 }

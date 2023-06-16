@@ -61,7 +61,7 @@ public class Input {
         }
     }
 
-    public static int enterInt(String mess, boolean check,Predicate<Integer> p) {
+    public static int enterInt(String mess, boolean check,Predicate<Integer> duplicate) {
         int intVar;
         while (true) {
             System.out.println("Enter " + mess + " :");
@@ -76,8 +76,8 @@ public class Input {
                 if (intVar < 0) {
                     System.out.println(mess + " must greater than 0");
                 } else {
-                    if(p.test(intVar)){
-                        System.out.println("Id has exist");
+                    if(duplicate.test(intVar)){
+                        System.out.println(mess +" has exist");
                     } else {
                         return intVar;
                         
