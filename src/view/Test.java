@@ -8,7 +8,7 @@ package view;
  *
  * @author Admin
  */
-public class Main {
+public class Test {
 
     public static void main(String[] args) {
         Menu m = new Menu();

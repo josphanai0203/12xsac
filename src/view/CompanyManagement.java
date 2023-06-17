@@ -8,10 +8,9 @@ import controller.Company;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import javax.security.auth.callback.Callback;
 import model.Customer;
 import util.Input;
-import static view.Menu.sc;
+import util.ValidatorUtils;
 
 /**
  *
@@ -23,7 +22,18 @@ public class CompanyManagement {
     static Scanner sc = new Scanner(System.in);
 
     public void add() {
-        c.addCustomer();
+        int id = Input.enterInt("ID", true, (idCheck -> {
+            for (Customer c :Company.customerList) {
+                if (c.getCustomerID() == idCheck) {
+                    return true;
+                }
+                
+            }
+            return false;
+        }));
+        String name = Input.enterString("Name");
+        String phone = Input.enterString("Phone Number (10 numbers)", ValidatorUtils.REGEX_PHONE_NUMBER);
+        c.addCustomer(id,name,phone);
     }
 
     public void display() {
@@ -51,7 +61,7 @@ public class CompanyManagement {
                 System.out.println("Wrong input ! Please re-enter");
                 continue;
             }
-            List<Customer> searchArr;
+            ArrayList<Customer> searchArr;
             switch (choice) {
                 case 1:
                     int id = Input.enterInt("ID Search", true);
@@ -59,7 +69,7 @@ public class CompanyManagement {
                     if (searchArr.isEmpty()) {
                         System.out.println("Customer not found ");
                     } else {
-                        searchArr.forEach(customer -> System.out.println(customer));
+                         c.displayCustomerList(searchArr);
                     }
                     break;
                 case 2:
@@ -68,7 +78,7 @@ public class CompanyManagement {
                     if (searchArr.isEmpty()) {
                         System.out.println("Customer not found ");
                     } else {
-                        searchArr.forEach(customer -> System.out.println(customer));
+                        c.displayCustomerList(searchArr);
                     }
                     break;
                 case 3:
@@ -81,8 +91,15 @@ public class CompanyManagement {
             }
         }
     }
-    public void displayStatistical(){
-        c.handleStatistical();
+
+    public void displayStatistical() {
+         String numStr = Input.enterString("Phone Number Start With ", ValidatorUtils.REGEX_NUMBER);
+        ArrayList<Customer> phoneArr = c.search(c -> c.getPhone().startsWith(numStr));
+        if(phoneArr.isEmpty()){
+            System.out.println("No Customer found");
+        }else{
+            c.displayCustomerList(phoneArr);
+        }
     }
-    
+
 }

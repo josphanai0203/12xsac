@@ -4,18 +4,16 @@
  */
 package util;
 
-import controller.Company;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.function.Predicate;
-import javax.security.auth.callback.Callback;
 
 /**
  *
  * @author Admin
  */
 public class Input {
-
+    private Input(){};
     static Scanner sc = new Scanner(System.in);
     private static final String ERR_MESSAGE = "Wrong Input ! Please Re-enter ";
     private static final String REGEX_NOT_MATCH = "Input Not Valid ! Please Re-enter ";
@@ -51,7 +49,7 @@ public class Input {
                 continue;
             }
 
-            boolean isTrue = Validator.checkRegex(str, regex);
+            boolean isTrue = ValidatorUtils.checkRegex(str, regex);
             if (isTrue) {
                 return str;
             } else {

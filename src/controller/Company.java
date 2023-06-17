@@ -1,13 +1,10 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.function.Predicate;
-import javax.security.auth.callback.Callback;
 import model.Customer;
 import util.Input;
-import util.Validator;
+import util.ValidatorUtils;
 
 /**
  *
@@ -15,20 +12,9 @@ import util.Validator;
  */
 public class Company {
     
-    static ArrayList<Customer> customerList = new ArrayList<>();
+    public static ArrayList<Customer> customerList = new ArrayList<>();
     
-    public void addCustomer() {
-        int id = Input.enterInt("ID", true, (idCheck -> {
-            for (Customer c : customerList) {
-                if (c.getCustomerID() == idCheck) {
-                    return true;
-                }
-                
-            }
-            return false;
-        }));
-        String name = Input.enterString("Name");
-        String phone = Input.enterString("Phone Number (10 numbers)", Validator.REGEX_PHONE_NUMBER);
+    public void addCustomer(int id , String name,String phone) {
         customerList.add(new Customer(id, name, phone));
     }
     
@@ -51,15 +37,11 @@ public class Company {
         return customerList.size();
     }
     
-    public void handleStatistical() {
-        String numStr = Input.enterString("Phone Number Start With ", Validator.REGEX_NUMBER);
-        ArrayList<Customer> phoneArr = search(c -> c.getPhone().startsWith(numStr));
-        if(phoneArr.isEmpty()){
-            System.out.println("No Customer found");
-        }else{
-            
-        phoneArr.forEach(c -> System.out.println(c));
+    public void displayCustomerList(ArrayList<Customer> list) {
+        for(Customer c:list){
+            System.out.println(c);
         }
+       
     }
     
 }
